@@ -1,0 +1,1172 @@
+<title>哔哩偶遇</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&family=Manrope:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Ma+Shan+Zheng&display=swap');
+
+:root{
+  --bg:#EEF0F4;
+  --surface:#FFFFFF;
+  --surface-2:#F6F7FA;
+  --ink:#14151A;
+  --ink-dim:#5B5F6B;
+  --border:#D8DCE3;
+  --accent:#FB7299;
+  --accent-2:#00AEEC;
+  --tier-10w:#B08968;
+  --tier-50w:#8891A0;
+  --tier-100w:#E0982B;
+  --tier-1000w:#B15FD1;
+  --ok:#2FAE66;
+  --shadow: 0 20px 60px -20px rgba(20,21,26,0.25);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0E0F13; --surface:#1A1B21; --surface-2:#212228;
+    --ink:#EDEFF3; --ink-dim:#9397A3; --border:#2C2E36;
+    --accent:#FF87AA; --accent-2:#3FCCFB;
+    --tier-10w:#C79A78; --tier-50w:#9FA8B5; --tier-100w:#FFC24D; --tier-1000w:#CB84E0;
+    --ok:#4CC97F; --shadow: 0 20px 70px -18px rgba(0,0,0,0.6);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0E0F13; --surface:#1A1B21; --surface-2:#212228;
+  --ink:#EDEFF3; --ink-dim:#9397A3; --border:#2C2E36;
+  --accent:#FF87AA; --accent-2:#3FCCFB;
+  --tier-10w:#C79A78; --tier-50w:#9FA8B5; --tier-100w:#FFC24D; --tier-1000w:#CB84E0;
+  --ok:#4CC97F; --shadow: 0 20px 70px -18px rgba(0,0,0,0.6);
+}
+
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  background:
+    radial-gradient(circle at 15% 8%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 40%),
+    radial-gradient(circle at 85% 90%, color-mix(in srgb, var(--accent-2) 8%, transparent), transparent 45%),
+    var(--bg);
+  color:var(--ink);
+  font-family:'Noto Sans SC','Manrope',-apple-system,sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3{text-wrap:balance; margin:0;}
+.mono{font-family:'JetBrains Mono',ui-monospace,monospace; font-variant-numeric:tabular-nums;}
+.latin{font-family:'Manrope','Noto Sans SC',sans-serif;}
+
+.page{ max-width:1180px; margin:0 auto; padding:clamp(24px,4vw,56px) clamp(18px,4vw,40px) 64px; }
+
+/* ---------- header ---------- */
+.masthead{ display:flex; flex-direction:column; gap:10px; margin-bottom:clamp(28px,4vw,44px); max-width:660px; }
+.eyebrow{
+  font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--accent-2); display:flex; align-items:center; gap:8px;
+}
+.eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 3px color-mix(in srgb, var(--ok) 25%, transparent);animation:pulse 2.2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.35;}}
+.masthead h1{ font-size:clamp(30px,4.4vw,44px); font-weight:900; line-height:1.05; letter-spacing:-.01em; }
+.masthead h1 .accent{color:var(--accent);}
+.masthead p{ margin:0; color:var(--ink-dim); font-size:15px; line-height:1.7; max-width:60ch; }
+
+/* ---------- layout ---------- */
+.stage{ display:grid; grid-template-columns:minmax(300px,380px) minmax(340px,1fr); gap:clamp(20px,3vw,36px); align-items:start; }
+@media (max-width:860px){ .stage{grid-template-columns:1fr;} }
+
+/* ================= PHONE ================= */
+.phone-wrap{ position:sticky; top:24px; display:flex; justify-content:center; }
+@media (max-width:860px){ .phone-wrap{position:static;} }
+
+.phone{
+  --w:340px; width:var(--w); aspect-ratio:375/812; border-radius:52px;
+  background:linear-gradient(155deg,#3a3b40,#0c0c0e 40%,#3a3b40);
+  padding:12px; box-shadow:var(--shadow); position:relative;
+}
+.phone::before{
+  content:""; position:absolute; inset:0; border-radius:52px; padding:1px;
+  background:linear-gradient(155deg,rgba(255,255,255,.35),rgba(255,255,255,0) 30%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor; mask-composite:exclude; pointer-events:none;
+}
+.screen{
+  position:relative; width:100%; height:100%; border-radius:40px; overflow:hidden;
+  background:#0C0D10; color:#F2F3F5; font-size:14px; display:flex; flex-direction:column;
+}
+.island{ position:absolute; top:10px; left:50%; transform:translateX(-50%); width:96px; height:26px; background:#000; border-radius:16px; z-index:40; }
+.statusbar{
+  display:flex; justify-content:space-between; align-items:center; padding:16px 26px 4px;
+  font-family:'Manrope',sans-serif; font-weight:700; font-size:13px; color:#fff; position:relative; z-index:20;
+}
+.statusbar .icons{display:flex; align-items:center; gap:5px;}
+
+.app-top{ padding:6px 14px 10px; display:flex; align-items:center; gap:10px; }
+.bili-logo{width:26px;height:20px;flex:none;}
+.search-pill{
+  flex:1; background:#1C1D22; border:1px solid #2A2B31; border-radius:16px; padding:7px 12px;
+  color:#7C808C; font-size:12.5px; display:flex; align-items:center; gap:6px;
+}
+.icon-btn{width:20px;height:20px;flex:none;color:#D7D9DE;}
+
+.tabs{ display:flex; gap:16px; padding:2px 16px 10px; font-size:13px; color:#8A8E99; overflow-x:auto; }
+.tabs .active{color:#fff; font-weight:700; position:relative;}
+.tabs .active::after{content:"";position:absolute;left:2px;right:2px;bottom:-7px;height:3px;border-radius:3px;background:var(--accent);}
+
+/* feature entry banner */
+.sp-banner{
+  margin:0 12px 10px; padding:11px 14px; border-radius:14px;
+  background:linear-gradient(120deg,#3a1626,#1c2340); border:1px solid #3a2a3f;
+  display:flex; align-items:center; gap:10px; cursor:pointer;
+}
+.sp-banner .ic{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;font-size:14px;flex:none;}
+.sp-banner .tx{flex:1; min-width:0;}
+.sp-banner .t1{font-size:12.5px;font-weight:700;color:#fff;}
+.sp-banner .t2{font-size:10.5px;color:#9AA0AC;margin-top:1px;}
+.sp-banner .chev{color:#6E7280;font-size:16px;}
+
+.feed{ flex:1; overflow:hidden; padding:2px 12px 0; display:grid; grid-template-columns:1fr 1fr; gap:10px 8px; align-content:start; }
+.card{display:flex; flex-direction:column; gap:5px;}
+.thumb{ aspect-ratio:16/10; border-radius:8px; position:relative; overflow:hidden; background:var(--tg1,#3a3d46); }
+.thumb.g1{--tg1:linear-gradient(135deg,#FB7299,#7A4FE0);}
+.thumb.g2{--tg1:linear-gradient(135deg,#00AEEC,#2544C9);}
+.thumb.g3{--tg1:linear-gradient(135deg,#E0982B,#B1502D);}
+.thumb.g4{--tg1:linear-gradient(135deg,#2FAE66,#0C6B8C);}
+.thumb.g5{--tg1:linear-gradient(135deg,#B15FD1,#5A2E8C);}
+.thumb.g6{--tg1:linear-gradient(135deg,#8891A0,#33363F);}
+.thumb{background-image:var(--tg1);}
+.thumb .dur{position:absolute; right:5px; bottom:4px; background:rgba(0,0,0,.55); font-size:9.5px; padding:1px 4px; border-radius:4px;}
+.thumb .play{position:absolute; left:5px; bottom:4px; font-size:9.5px; background:rgba(0,0,0,.4); padding:1px 5px; border-radius:4px; display:flex; align-items:center; gap:3px;}
+.card .title{font-size:11.5px; line-height:1.35; color:#EDEEF1; font-weight:500; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;}
+.card .meta{font-size:10px; color:#82868F; display:flex; align-items:center; gap:4px;}
+.avatar-dot{width:11px;height:11px;border-radius:50%;flex:none;}
+
+.tabbar{ display:flex; justify-content:space-around; align-items:center; padding:8px 8px 10px; border-top:1px solid #202126; background:#0C0D10; }
+.tabbar .item{display:flex; flex-direction:column; align-items:center; gap:2px; color:#7C808C; font-size:9.5px;}
+.tabbar .item.on{color:#fff;}
+.tabbar .plus{width:34px;height:24px;border-radius:8px;background:linear-gradient(135deg,#FB7299,#00AEEC);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;}
+
+/* live signal pill */
+.signal-pill{
+  position:absolute; top:44px; left:50%; transform:translate(-50%,-140%); display:flex; align-items:center; gap:8px;
+  background:rgba(28,29,34,.92); border:1px solid rgba(255,255,255,.08); backdrop-filter:blur(10px);
+  padding:7px 14px 7px 8px; border-radius:20px; z-index:50;
+  transition:transform .5s cubic-bezier(.2,.9,.25,1); box-shadow:0 8px 20px rgba(0,0,0,.35); cursor:pointer;
+}
+.signal-pill.show{transform:translate(-50%,0);}
+.signal-pill .ping{width:8px;height:8px;border-radius:50%;background:var(--tier-color,#E0982B);box-shadow:0 0 0 4px color-mix(in srgb, var(--tier-color,#E0982B) 30%, transparent); animation:pulse 1.6s infinite;}
+.signal-pill span{font-size:11.5px;font-weight:700;color:#fff;white-space:nowrap;}
+.signal-pill .d{color:#9AA0AC;font-weight:600;}
+
+/* notification banner */
+.notif{
+  position:absolute; top:52px; left:10px; right:10px; background:rgba(30,31,37,.9); backdrop-filter:blur(16px);
+  border:1px solid rgba(255,255,255,.08); border-radius:18px; padding:11px 12px; display:flex; gap:10px; z-index:60;
+  transform:translateY(-130%); opacity:0; transition:transform .45s cubic-bezier(.2,.9,.25,1), opacity .3s; cursor:pointer;
+}
+.notif.show{transform:translateY(0); opacity:1;}
+.notif .nicon{width:34px;height:34px;border-radius:9px;background:var(--accent);flex:none;display:flex;align-items:center;justify-content:center;}
+.notif .body{flex:1; min-width:0;}
+.notif .row1{display:flex; justify-content:space-between; font-size:10.5px; color:#9AA0AC; font-weight:700;}
+.notif .title{font-size:12.5px; font-weight:700; color:#fff; margin-top:2px;}
+.notif .msg{font-size:11.5px; color:#C9CBD1; margin-top:2px; line-height:1.4;}
+
+/* quick-glance bottom sheet (far-range ping) */
+.sheet-backdrop{ position:absolute; inset:0; background:rgba(0,0,0,0); z-index:70; pointer-events:none; transition:background .3s; }
+.sheet-backdrop.show{background:rgba(0,0,0,.5); pointer-events:auto;}
+.sheet{
+  position:absolute; left:0; right:0; bottom:0; z-index:80; background:#1B1C22; border-radius:24px 24px 0 0;
+  padding:10px 20px 26px; transform:translateY(100%); transition:transform .4s cubic-bezier(.2,.9,.25,1); border-top:1px solid #2A2B31;
+}
+.sheet.show{transform:translateY(0);}
+.sheet .grabber{width:36px;height:4px;border-radius:3px;background:#3C3D44;margin:0 auto 16px;}
+.sheet .avatar{
+  width:56px;height:56px;border-radius:50%; display:flex;align-items:center;justify-content:center; font-size:22px; font-weight:800; color:#fff;
+  background:linear-gradient(135deg,var(--tier-color),#222); border:2px solid var(--tier-color); margin:0 auto 10px;
+}
+.sheet .tiertag{ display:flex; align-items:center; justify-content:center; gap:6px; font-size:11px; font-weight:700; color:var(--tier-color); margin-bottom:4px; }
+.sheet .tiertag .sw{width:8px;height:8px;border-radius:2px;background:var(--tier-color);}
+.sheet h3{text-align:center; font-size:16px; color:#fff; margin-bottom:2px;}
+.sheet .sign{text-align:center; font-size:12px; color:#9AA0AC; margin-bottom:14px; line-height:1.5; min-height:34px;}
+.sheet .distrow{ display:flex; justify-content:space-between; align-items:center; background:#212229; border:1px solid #2C2D34; border-radius:12px; padding:10px 14px; margin-bottom:14px; }
+.sheet .distrow .lab{font-size:11px; color:#8A8E99;}
+.sheet .distrow .val{font-family:'JetBrains Mono',monospace; font-weight:700; color:#fff; font-size:15px;}
+.sheet .actions{display:flex; gap:8px;}
+.sheet button{ flex:1; border:none; border-radius:12px; padding:11px 0; font-size:13px; font-weight:700; font-family:inherit; cursor:pointer; }
+.sheet .wave{background:var(--accent); color:#3A0A1F;}
+.sheet .close{background:#2A2B31; color:#D7D9DE;}
+
+/* ============ close-encounter reveal + signature card ============ */
+.reveal-backdrop{ position:absolute; inset:0; background:rgba(0,0,0,0); z-index:90; pointer-events:none; transition:background .35s; }
+.reveal-backdrop.show{background:rgba(0,0,0,.6); pointer-events:auto; backdrop-filter:blur(2px);}
+.reveal-card{
+  position:absolute; left:20px; right:20px; top:50%; transform:translateY(-50%) scale(.82); opacity:0; z-index:95;
+  background:linear-gradient(160deg,#212230,#121319); border:1px solid rgba(255,255,255,.08); border-radius:22px;
+  padding:24px 20px 20px; text-align:center; transition:transform .45s cubic-bezier(.2,.9,.25,1), opacity .3s;
+  box-shadow:0 30px 70px rgba(0,0,0,.55);
+}
+.reveal-backdrop.show .reveal-card{transform:translateY(-50%) scale(1); opacity:1;}
+.reveal-card .rav{
+  width:52px;height:52px;border-radius:50%;margin:0 auto 10px; display:flex;align-items:center;justify-content:center;
+  font-size:20px;font-weight:800;color:#fff; background:linear-gradient(135deg,var(--tier-color),#222); border:2px solid var(--tier-color);
+}
+.reveal-card .badge{font-size:10.5px; color:var(--tier-color); font-weight:700; letter-spacing:.08em; text-transform:uppercase; margin-bottom:6px;}
+.reveal-card .headline{font-size:12.5px; color:#9AA0AC; margin-bottom:2px;}
+.reveal-card .name{font-size:19px; font-weight:900; color:#fff; margin-bottom:12px;}
+.reveal-card .sigwrap{background:rgba(255,255,255,.03); border:1px dashed rgba(255,255,255,.15); border-radius:14px; padding:14px 10px 10px; margin-bottom:16px;}
+.reveal-card .sigline{font-family:'Ma Shan Zheng',cursive; font-size:32px; color:var(--tier-color); line-height:1.2;}
+.reveal-card .sigquote{font-size:11px; color:#C9CBD1; margin-top:6px; line-height:1.5;}
+.reveal-card .sigmeta{font-family:'JetBrains Mono',monospace; font-size:9.5px; color:#5C606A; margin-top:8px;}
+.reveal-card .ok-btn{ width:100%; border:none; border-radius:12px; padding:12px 0; font-weight:800; font-size:13.5px; cursor:pointer; font-family:'Noto Sans SC'; background:var(--tier-color); color:#17181D; }
+
+/* ============ 擦身页 (streetpass full feature page) ============ */
+.sp-page{
+  position:absolute; inset:0; background:#0C0D10; z-index:65;
+  transform:translateX(100%); transition:transform .4s cubic-bezier(.2,.9,.25,1);
+  display:flex; flex-direction:column;
+}
+.sp-page.show{transform:translateX(0);}
+.sp-head{ display:flex; align-items:center; justify-content:space-between; padding:52px 16px 8px; color:#fff; font-weight:700; font-size:15px; flex:none; }
+.sp-head .back, .sp-head .gear{ width:26px;height:26px;display:flex;align-items:center;justify-content:center;color:#D7D9DE; cursor:pointer; font-size:16px; }
+
+.seg-mini{ display:flex; background:#17181D; border:1px solid #24252c; border-radius:9px; padding:2px; gap:2px; }
+.seg-mini button{ flex:1; border:none; background:transparent; color:#9AA0AC; font-size:10.5px; padding:8px 3px; border-radius:7px; font-family:'Noto Sans SC'; font-weight:700; cursor:pointer; white-space:nowrap; }
+.seg-mini button.sel{ background:var(--accent); color:#3A0A1F; }
+.seg-mini.role{ margin:2px 16px 10px; }
+.seg-mini.role button{ font-size:12px; padding:9px 4px; }
+
+.sp-stats{ display:flex; gap:8px; padding:0 16px 10px; flex:none; }
+.sp-stats .tile{ flex:1; background:#17181D; border:1px solid #212228; border-radius:12px; padding:9px 6px; text-align:center; }
+.sp-stats .tile .num{ font-family:'JetBrains Mono',monospace; font-weight:700; font-size:16px; color:#fff; }
+.sp-stats .tile .lab{ font-size:9.5px; color:#7C808C; margin-top:2px; }
+
+.sp-tabs{ display:flex; gap:6px; margin:0 16px 8px; flex:none; }
+.sp-tabs button{ flex:1; background:#17181D; border:1px solid #212228; color:#9AA0AC; font-size:11px; font-weight:700; padding:8px 4px; border-radius:9px; font-family:'Noto Sans SC'; cursor:pointer; }
+.sp-tabs button.sel{ background:#292A33; color:#fff; border-color:#3a3b45; }
+
+.sp-body{ flex:1; overflow-y:auto; }
+.panel{ padding:6px 16px 20px; }
+
+/* radar */
+.radar-canvas{ position:relative; width:230px; height:230px; margin:6px auto 2px; }
+.radar-canvas .ring{position:absolute; border:1px solid #23262E; border-radius:50%;}
+.radar-canvas .sweep{
+  position:absolute; inset:0; border-radius:50%; overflow:hidden;
+  background:conic-gradient(from 0deg, color-mix(in srgb, var(--accent-2) 55%, transparent), transparent 28%);
+  animation:spin 3.4s linear infinite; mix-blend-mode:screen;
+}
+@keyframes spin{to{transform:rotate(360deg);}}
+.radar-canvas .me{position:absolute; left:50%; top:50%; width:9px; height:9px; margin:-4.5px; border-radius:50%; background:#fff; box-shadow:0 0 0 4px rgba(255,255,255,.15); z-index:5;}
+.radar-canvas .rangelabel{position:absolute; right:4px; bottom:0; font-family:'JetBrains Mono'; font-size:9px; color:#5C606A;}
+.blip{position:absolute; width:12px; height:12px; margin:-6px; border-radius:50%; z-index:4; transition:all .6s ease;}
+.blip.fuzzy{filter:blur(1.6px);}
+.blip::after{content:"";position:absolute; inset:-6px; border-radius:50%; background:inherit; opacity:.35; animation:pulse 1.8s infinite;}
+.radar-legend{display:flex; justify-content:center; gap:12px; margin:8px 0 6px; flex-wrap:wrap;}
+.radar-legend .li{display:flex; align-items:center; gap:5px; font-size:10px; color:#9AA0AC;}
+.radar-legend .sw{width:8px;height:8px;border-radius:50%;}
+.close-hint{ text-align:center; font-size:10.5px; color:#6E7280; margin-bottom:4px; }
+
+/* generic list (waves / event style entries) */
+.list-entry{ display:flex; align-items:center; gap:10px; background:#17181D; border:1px solid #212228; border-radius:12px; padding:9px 12px; margin-bottom:8px; }
+.list-entry .sw{width:9px;height:9px;border-radius:50%; flex:none;}
+.list-entry .txt{flex:1; font-size:11.5px; color:#D7D9DE; min-width:0;}
+.list-entry .txt b{color:#fff;}
+.list-entry .time{font-family:'JetBrains Mono',monospace; font-size:10px; color:#6E7280; flex:none;}
+.empty-hint{text-align:center; color:#5C606A; font-size:12px; padding:30px 20px;}
+
+/* collection grid */
+.collection-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:9px; }
+.coll-card{ position:relative; display:flex; flex-direction:column; align-items:center; gap:5px; background:#17181D; border:1px solid #212228; border-radius:12px; padding:10px 5px; }
+.coll-card .av{ width:42px;height:42px;border-radius:50%; display:flex;align-items:center;justify-content:center; font-weight:800; color:#fff; border:2px solid var(--c); background:linear-gradient(135deg,var(--c),#222); }
+.coll-card .nm{ font-size:10px; color:#D7D9DE; text-align:center; line-height:1.3; max-width:100%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; width:100%; }
+.coll-card .mt{ font-size:8.5px; color:#6E7280; font-family:'JetBrains Mono'; }
+.coll-card .signed-tag{ position:absolute; top:5px; right:5px; font-size:8.5px; background:var(--c); color:#17181D; font-weight:800; padding:1px 5px; border-radius:6px; }
+
+/* broadcast status card */
+.broadcast-card{ background:#17181D; border:1px solid #212228; border-radius:16px; padding:20px 16px; display:flex; flex-direction:column; align-items:center; gap:8px; text-align:center; }
+.bc-ring{ width:60px;height:60px;border-radius:50%; display:flex;align-items:center;justify-content:center; position:relative; margin-bottom:4px; }
+.bc-ring::before,.bc-ring::after{ content:""; position:absolute; inset:0; border-radius:50%; border:2px solid var(--tier-color,var(--accent)); animation:bcpulse 2.2s infinite; }
+.bc-ring::after{animation-delay:1.1s;}
+@keyframes bcpulse{0%{transform:scale(.8);opacity:.8;}100%{transform:scale(1.8);opacity:0;}}
+.bc-ring .core{ width:40px;height:40px;border-radius:50%; background:linear-gradient(135deg,var(--tier-color,var(--accent)),#222); display:flex;align-items:center;justify-content:center; z-index:2; font-size:16px; }
+.broadcast-card.off .bc-ring::before,.broadcast-card.off .bc-ring::after{display:none;}
+.broadcast-card.off .bc-ring .core{background:#2A2B31;}
+.bc-status{font-size:13.5px;font-weight:800;color:#fff;}
+.bc-detail{font-size:11px;color:#9AA0AC;line-height:1.7;}
+.bc-link{margin-top:2px;font-size:11.5px;color:var(--accent-2);cursor:pointer;font-weight:700;}
+
+/* settings rows */
+.setting-row{ display:flex; flex-direction:column; gap:9px; padding:13px 0; border-bottom:1px solid #1c1d23; }
+.setting-row:last-child{border-bottom:none;}
+.setting-row .head{display:flex; justify-content:space-between; align-items:flex-start; gap:10px;}
+.setting-row .txt .t{font-size:12.5px;color:#EDEEF1;font-weight:600;}
+.setting-row .txt .d{font-size:10.5px;color:#7C808C;line-height:1.5;margin-top:2px;}
+.toggle{ position:relative; width:42px; height:25px; flex:none; }
+.toggle input{ opacity:0; width:100%; height:100%; position:absolute; margin:0; cursor:pointer; z-index:2; }
+.toggle .track{ position:absolute; inset:0; background:#33343d; border-radius:14px; transition:background .2s; }
+.toggle .thumb{ position:absolute; top:2px; left:2px; width:21px; height:21px; background:#fff; border-radius:50%; transition:transform .2s; box-shadow:0 1px 3px rgba(0,0,0,.4); }
+.toggle input:checked + .track{background:var(--accent);}
+.toggle input:checked ~ .thumb{transform:translateX(17px);}
+.timerange{display:flex; align-items:center; gap:8px;}
+.timerange input[type=time]{ background:#1C1D22; border:1px solid #2A2B31; color:#fff; border-radius:8px; padding:6px 8px; font-family:'JetBrains Mono'; font-size:11.5px; }
+.timerange .to{color:#7C808C; font-size:11px;}
+
+/* ================= CONSOLE ================= */
+.console{ background:var(--surface); border:1px solid var(--border); border-radius:20px; padding:clamp(18px,2.4vw,28px); display:flex; flex-direction:column; gap:20px; box-shadow:var(--shadow); }
+.console-head{display:flex; flex-direction:column; gap:4px;}
+.console-head .eyebrow{color:var(--accent);}
+.console-head h2{font-size:19px; font-weight:800;}
+.console-head p{margin:2px 0 0; font-size:13px; color:var(--ink-dim);}
+
+.status-strip{
+  display:flex; align-items:center; gap:8px; background:var(--surface-2); border:1px solid var(--border); border-radius:12px;
+  padding:9px 12px; font-size:11.5px; color:var(--ink-dim);
+}
+.status-strip .sdot{width:7px;height:7px;border-radius:50%;background:var(--ok);flex:none;}
+.status-strip .sdot.off{background:var(--ink-dim);}
+.status-strip b{color:var(--ink); font-weight:700;}
+
+.field-block{display:flex; flex-direction:column; gap:10px;}
+.field-block .label{ font-size:12px; font-weight:700; color:var(--ink-dim); display:flex; align-items:center; justify-content:space-between; }
+.field-block .label .hint{font-weight:500; font-size:11px; color:var(--ink-dim); opacity:.75;}
+
+.tier-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:8px;}
+.tier-btn{
+  border:1.5px solid var(--border); background:var(--surface-2); border-radius:12px; padding:10px 6px;
+  display:flex; flex-direction:column; align-items:center; gap:5px; cursor:pointer; font-family:inherit;
+  transition:border-color .15s, transform .15s, background .15s; color:var(--ink);
+}
+.tier-btn:hover{transform:translateY(-2px);}
+.tier-btn .sw{width:16px;height:16px;border-radius:5px;}
+.tier-btn .n{font-family:'Manrope',sans-serif; font-weight:800; font-size:14px;}
+.tier-btn .f{font-size:10px; color:var(--ink-dim);}
+.tier-btn.sel{border-color:var(--tier-color); background:color-mix(in srgb, var(--tier-color) 12%, var(--surface-2));}
+
+.slider-row{display:flex; align-items:center; gap:12px;}
+.slider-row input[type=range]{flex:1; accent-color:var(--accent);}
+.slider-row .readout{ font-family:'JetBrains Mono',monospace; font-weight:700; font-size:13px; min-width:60px; text-align:right; color:var(--ink); }
+
+.btn-row{display:flex; gap:10px;}
+.btn{ flex:1; border:none; border-radius:12px; padding:13px 0; font-weight:800; font-size:13.5px; font-family:'Noto Sans SC',sans-serif; cursor:pointer; letter-spacing:.01em; transition:filter .15s, transform .15s; }
+.btn:active{transform:scale(.98);}
+.btn.primary{background:var(--accent); color:#3A0A1F;}
+.btn.primary:hover{filter:brightness(1.05);}
+.btn.ghost{background:transparent; border:1.5px solid var(--border); color:var(--ink-dim);}
+.btn.small{padding:11px 0; font-size:12.5px;}
+
+.divider{height:1px; background:var(--border);}
+
+.log-panel{
+  background:var(--surface-2); border:1px solid var(--border); border-radius:14px; padding:12px 14px; max-height:190px;
+  overflow-y:auto; display:flex; flex-direction:column; gap:7px;
+}
+.log-panel .row{display:flex; gap:8px; align-items:baseline; font-size:11.5px;}
+.log-panel .row .t{font-family:'JetBrains Mono',monospace; color:var(--ink-dim); flex:none;}
+.log-panel .row .m{color:var(--ink);}
+.log-empty{color:var(--ink-dim); font-size:12px; text-align:center; padding:10px 0;}
+
+.footnote{ font-size:11.5px; color:var(--ink-dim); line-height:1.6; border-top:1px dashed var(--border); padding-top:14px; }
+
+@media (prefers-reduced-motion: reduce){ *{animation-duration:.001ms !important; transition-duration:.001ms !important;} }
+</style>
+
+<div class="page">
+
+  <div class="masthead">
+    <div class="eyebrow"><span class="dot"></span>OFFLINE EVENT PROTOTYPE</div>
+    <h1>哔哩<span class="accent">偶遇</span> · 线下擦身通信</h1>
+    <p>参考任天堂「すれちがい通信」思路设计的概念原型：粉丝的客户端在 UP 主进入 1km 范围时收到一条模糊提醒——只知道量级、不知道是谁；一旦真的走到 3 米内当面确认，身份会直接揭晓，还能收下 UP 主赠送的专属电子签名。右侧控制台可现场模拟整个过程，手机内也能分别体验 UP 主端与粉丝端的隐私设置。</p>
+  </div>
+
+  <div class="stage">
+
+    <!-- ============ PHONE ============ -->
+    <div class="phone-wrap">
+      <div class="phone">
+        <div class="screen" id="screen">
+          <div class="island"></div>
+
+          <div class="statusbar">
+            <span>9:41</span>
+            <div class="icons">
+              <svg width="17" height="11" viewBox="0 0 17 11" fill="none"><rect x="0" y="6" width="3" height="5" rx="0.8" fill="#fff"/><rect x="4.5" y="4" width="3" height="7" rx="0.8" fill="#fff"/><rect x="9" y="2" width="3" height="9" rx="0.8" fill="#fff"/><rect x="13.5" y="0" width="3" height="11" rx="0.8" fill="#fff"/></svg>
+              <svg width="15" height="11" viewBox="0 0 15 11" fill="none"><path d="M7.5 11C5.6 11 3.8 10.2 2.4 8.8l1.4-1.4c1 1 2.3 1.6 3.7 1.6s2.7-.6 3.7-1.6l1.4 1.4C11.2 10.2 9.4 11 7.5 11zM0 5.3l1.4 1.4c1.6-1.6 3.8-2.5 6.1-2.5s4.5.9 6.1 2.5l1.4-1.4C13 3.3 10.3 2.1 7.5 2.1S2 3.3 0 5.3z" fill="#fff"/></svg>
+              <svg width="24" height="11" viewBox="0 0 24 11" fill="none"><rect x="0.5" y="0.5" width="20" height="10" rx="2.5" stroke="#fff" opacity="0.5"/><rect x="2" y="2" width="15" height="7" rx="1.3" fill="#fff"/><rect x="21.5" y="3.2" width="1.6" height="4.6" rx="0.8" fill="#fff" opacity="0.5"/></svg>
+            </div>
+          </div>
+
+          <div class="app-top">
+            <svg class="bili-logo" viewBox="0 0 48 36" fill="none">
+              <rect x="2" y="7" width="44" height="27" rx="8" fill="#FB7299"/>
+              <path d="M10 2 L17 7 M38 2 L31 7" stroke="#FB7299" stroke-width="3.4" stroke-linecap="round"/>
+              <circle cx="17" cy="18.5" r="4.2" fill="#fff"/>
+              <circle cx="31" cy="18.5" r="4.2" fill="#fff"/>
+            </svg>
+            <div class="search-pill">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#7C808C" stroke-width="2.4"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+              搜索
+            </div>
+            <svg class="icon-btn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 17h5l-1.4-2.1a2 2 0 01-.3-1.1V11a6 6 0 10-12 0v2.8a2 2 0 01-.3 1.1L4.7 17H10m5 0a2.5 2.5 0 01-5 0m5 0H10"/></svg>
+          </div>
+
+          <div class="tabs">
+            <span>关注</span><span class="active">推荐</span><span>热门</span><span>直播</span><span>科技</span><span>生活</span>
+          </div>
+
+          <div class="sp-banner" id="spBanner">
+            <div class="ic">📡</div>
+            <div class="tx"><div class="t1">哔哩偶遇</div><div class="t2">附近的 UP 主 · 点击查看</div></div>
+            <div class="chev">›</div>
+          </div>
+
+          <div class="feed" id="feed"><!-- injected by JS --></div>
+
+          <div class="tabbar">
+            <div class="item on">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 11l9-7 9 7"/><path d="M5 10v9h14v-9"/></svg>
+              首页
+            </div>
+            <div class="item">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="9"/><path d="M8 12h8M8 16h5"/></svg>
+              动态
+            </div>
+            <div class="plus">+</div>
+            <div class="item">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a4 4 0 018 0v2"/></svg>
+              会员购
+            </div>
+            <div class="item">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>
+              我的
+            </div>
+          </div>
+
+          <!-- live signal pill -->
+          <div class="signal-pill" id="signalPill">
+            <span class="ping" id="pillPing"></span>
+            <span id="pillText">附近出现 UP 主</span>
+            <span class="d mono" id="pillDist">980m</span>
+          </div>
+
+          <!-- notification banner (far-range mystery ping) -->
+          <div class="notif" id="notif">
+            <div class="nicon">
+              <svg width="18" height="14" viewBox="0 0 48 36" fill="none">
+                <rect x="2" y="7" width="44" height="27" rx="8" fill="#fff"/>
+                <circle cx="17" cy="18.5" r="4.2" fill="#FB7299"/>
+                <circle cx="31" cy="18.5" r="4.2" fill="#FB7299"/>
+              </svg>
+            </div>
+            <div class="body">
+              <div class="row1"><span>哔哩偶遇</span><span>现在</span></div>
+              <div class="title" id="notifTitle">检测到附近的 UP 主信号</div>
+              <div class="msg" id="notifMsg">一位百万级 UP 主正在 1km 范围内，点击查看详情</div>
+            </div>
+          </div>
+
+          <!-- quick-glance bottom sheet -->
+          <div class="sheet-backdrop" id="sheetBackdrop"></div>
+          <div class="sheet" id="sheet">
+            <div class="grabber"></div>
+            <div class="avatar" id="sheetAvatar">?</div>
+            <div class="tiertag" id="sheetTier"><span class="sw"></span><span>百万级 UP 主</span></div>
+            <h3 id="sheetName">神秘 UP 主</h3>
+            <div class="sign" id="sheetSign">仅公开粉丝量级，身份保密</div>
+            <div class="distrow"><span class="lab">当前距离</span><span class="val mono" id="sheetDist">980 m</span></div>
+            <div class="actions">
+              <button class="close" id="sheetClose">先不打扰</button>
+              <button class="wave" id="sheetWave">👋 打个招呼</button>
+            </div>
+          </div>
+
+          <!-- close-encounter reveal + signature -->
+          <div class="reveal-backdrop" id="revealBackdrop">
+            <div class="reveal-card">
+              <div class="rav" id="revAvatar">?</div>
+              <div class="badge" id="revBadge">100万+ UP 主</div>
+              <div class="headline">🎉 你偶遇了</div>
+              <div class="name" id="revName">神秘 UP 主</div>
+              <div class="sigwrap">
+                <div class="sigline" id="revSigline">签名</div>
+                <div class="sigquote" id="revSigquote">很高兴当面遇到你！</div>
+                <div class="sigmeta" id="revSigmeta">NO. 000000 · 哔哩偶遇认证签名</div>
+              </div>
+              <button class="ok-btn" id="revOk">太棒了，收下签名</button>
+            </div>
+          </div>
+
+          <!-- ============ 擦身页（完整功能页） ============ -->
+          <div class="sp-page" id="spPage">
+            <div class="sp-head">
+              <span class="back" id="spBack">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M15 18l-6-6 6-6"/></svg>
+              </span>
+              <span>哔哩偶遇</span>
+              <span class="gear" id="spGear">⚙</span>
+            </div>
+
+            <div class="seg-mini role" id="spRoleSeg">
+              <button data-role="fan" class="sel">粉丝模式</button>
+              <button data-role="up">UP 主模式</button>
+            </div>
+
+            <div class="sp-stats" id="spStats"></div>
+            <div class="sp-tabs" id="spTabs">
+              <button data-t="0" class="sel"></button>
+              <button data-t="1"></button>
+              <button data-t="2"></button>
+            </div>
+
+            <div class="sp-body">
+              <!-- 粉丝：雷达 -->
+              <div class="panel" id="panelFanRadar">
+                <div class="close-hint">进入 3 米内会自动确认身份并解锁电子签名</div>
+                <div class="radar-canvas" id="radarCanvas">
+                  <div class="ring" style="inset:0;"></div>
+                  <div class="ring" style="inset:22%;"></div>
+                  <div class="ring" style="inset:44%;"></div>
+                  <div class="sweep"></div>
+                  <div class="me"></div>
+                  <span class="rangelabel" id="rangeLabel">1000m</span>
+                </div>
+                <div class="radar-legend">
+                  <div class="li"><span class="sw" style="background:var(--tier-10w)"></span>10万+</div>
+                  <div class="li"><span class="sw" style="background:var(--tier-50w)"></span>50万+</div>
+                  <div class="li"><span class="sw" style="background:var(--tier-100w)"></span>100万+</div>
+                  <div class="li"><span class="sw" style="background:var(--tier-1000w)"></span>1000万+</div>
+                </div>
+              </div>
+
+              <!-- 粉丝：图鉴 -->
+              <div class="panel" id="panelFanCollection" hidden>
+                <div class="collection-grid" id="collectionGrid">
+                  <div class="empty-hint" style="grid-column:1/-1;">暂无擦肩记录 · 在右侧控制台发送一次信号试试</div>
+                </div>
+              </div>
+
+              <!-- 粉丝：隐私设置 -->
+              <div class="panel" id="panelFanPrivacy" hidden>
+                <div class="setting-row">
+                  <div class="head">
+                    <div class="txt"><div class="t">擦肩提醒</div><div class="d">关闭后仍会静默记录擦肩，但不会弹出通知</div></div>
+                    <label class="toggle"><input type="checkbox" id="fanReminders" checked><span class="track"></span><span class="thumb"></span></label>
+                  </div>
+                </div>
+                <div class="setting-row">
+                  <div class="head"><div class="txt"><div class="t">提醒范围</div><div class="d">仅在此距离内的 UP 主会触发提醒</div></div></div>
+                  <div class="seg-mini" id="fanRangeSeg">
+                    <button data-v="500">500m</button>
+                    <button data-v="1000" class="sel">1km</button>
+                    <button data-v="2000">2km</button>
+                  </div>
+                </div>
+                <div class="setting-row">
+                  <div class="head">
+                    <div class="txt"><div class="t">免打扰模式</div><div class="d">开启后，此时段内不会弹出任何擦肩提醒（当面 3 米确认不受影响）</div></div>
+                    <label class="toggle"><input type="checkbox" id="fanDnd"><span class="track"></span><span class="thumb"></span></label>
+                  </div>
+                  <div class="timerange" id="fanDndTimes" hidden>
+                    <input type="time" id="fanDndStart" value="22:00"><span class="to">至</span><input type="time" id="fanDndEnd" value="08:00">
+                  </div>
+                </div>
+                <div class="setting-row">
+                  <div class="head">
+                    <div class="txt"><div class="t">仅接收已关注 UP 主</div><div class="d">开启后，陌生 UP 主的擦肩不会打扰你（此原型未接入真实关注关系，仅展示开关）</div></div>
+                    <label class="toggle"><input type="checkbox" id="fanFollowed"><span class="track"></span><span class="thumb"></span></label>
+                  </div>
+                </div>
+                <div class="setting-row">
+                  <div class="head"><div class="txt"><div class="t">位置精度</div><div class="d">推荐仅使用模糊距离区间，不上传你的精确坐标</div></div></div>
+                  <div class="seg-mini" id="fanPrecisionSeg">
+                    <button data-v="fuzzy" class="sel">模糊区间</button>
+                    <button data-v="exact">精确定位</button>
+                  </div>
+                </div>
+                <div class="setting-row">
+                  <div class="head">
+                    <div class="txt"><div class="t">打招呼时公开昵称</div><div class="d">关闭时，UP 主只会看到「神秘粉丝」，不会看到你的昵称</div></div>
+                    <label class="toggle"><input type="checkbox" id="fanRevealWave"><span class="track"></span><span class="thumb"></span></label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- UP主：广播中 -->
+              <div class="panel" id="panelUpBroadcast" hidden>
+                <div class="broadcast-card" id="broadcastCard">
+                  <div class="bc-ring"><div class="core" id="bcCore">📡</div></div>
+                  <div class="bc-status" id="bcStatus">正在广播</div>
+                  <div class="bc-detail" id="bcDetail">100万+ · 仅显示量级 · 覆盖 1km</div>
+                  <div class="bc-link" id="bcLink">前往隐私设置调整 ›</div>
+                </div>
+              </div>
+
+              <!-- UP主：收到的招呼 -->
+              <div class="panel" id="panelUpWaves" hidden>
+                <div id="wavesList"><div class="empty-hint">暂无粉丝打招呼 · 在右侧控制台模拟一次</div></div>
+              </div>
+
+              <!-- UP主：隐私设置 -->
+              <div class="panel" id="panelUpPrivacy" hidden>
+                <div class="setting-row">
+                  <div class="head">
+                    <div class="txt"><div class="t">开启附近广播</div><div class="d">关闭后，你不会出现在任何人的擦身雷达上</div></div>
+                    <label class="toggle"><input type="checkbox" id="upBroadcasting" checked><span class="track"></span><span class="thumb"></span></label>
+                  </div>
+                </div>
+                <div class="setting-row">
+                  <div class="head"><div class="txt"><div class="t">粉丝量级徽章</div><div class="d">决定弹窗中显示的量级标签与配色</div></div></div>
+                  <div class="seg-mini" id="upTierSeg">
+                    <button data-v="10w">10万</button>
+                    <button data-v="50w">50万</button>
+                    <button data-v="100w" class="sel">100万</button>
+                    <button data-v="1000w">1000万</button>
+                  </div>
+                </div>
+                <div class="setting-row">
+                  <div class="head"><div class="txt"><div class="t">身份可见度</div><div class="d">1km 内的远距离提醒会遵循这个设置</div></div></div>
+                  <div class="seg-mini" id="upVisSeg">
+                    <button data-v="anon" class="sel">仅量级</button>
+                    <button data-v="sign">神秘签名</button>
+                    <button data-v="open">公开昵称</button>
+                  </div>
+                </div>
+                <div class="setting-row">
+                  <div class="head"><div class="txt"><div class="t">可见范围</div><div class="d">超出此距离，粉丝完全侦测不到你</div></div></div>
+                  <div class="seg-mini" id="upRangeSeg">
+                    <button data-v="500">500m</button>
+                    <button data-v="1000" class="sel">1km</button>
+                    <button data-v="2000">2km</button>
+                  </div>
+                </div>
+                <div class="setting-row">
+                  <div class="head"><div class="txt"><div class="t">广播对象</div><div class="d">限定谁可以侦测到你的擦肩信号</div></div></div>
+                  <div class="seg-mini" id="upAudienceSeg">
+                    <button data-v="all" class="sel">所有人</button>
+                    <button data-v="followers">仅关注</button>
+                    <button data-v="vip">仅大会员</button>
+                  </div>
+                </div>
+                <div class="setting-row">
+                  <div class="head">
+                    <div class="txt"><div class="t">定时广播</div><div class="d">仅活动时段自动开启（此原型不检查真实时间，仅作为设置项展示）</div></div>
+                    <label class="toggle"><input type="checkbox" id="upSchedule"><span class="track"></span><span class="thumb"></span></label>
+                  </div>
+                  <div class="timerange" id="upScheduleTimes" hidden>
+                    <input type="time" id="upSchedStart" value="14:00"><span class="to">至</span><input type="time" id="upSchedEnd" value="18:00">
+                  </div>
+                </div>
+                <div class="setting-row">
+                  <div class="head">
+                    <div class="txt"><div class="t">近距离解锁签名</div><div class="d">粉丝进入 3 米内时，自动显示你的昵称并赠送一张专属电子签名</div></div>
+                    <label class="toggle"><input type="checkbox" id="upCloseReveal" checked><span class="track"></span><span class="thumb"></span></label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ CONSOLE ============ -->
+    <div class="console">
+      <div class="console-head">
+        <div class="eyebrow">线下活动演示台</div>
+        <h2>演示控制台</h2>
+        <p>作为「主持人」推动这场擦肩：调整量级与距离，观察左侧手机在粉丝端 / UP 主端两种视角下的实时反应。</p>
+      </div>
+
+      <div class="status-strip">
+        <span class="sdot" id="statusDot"></span>
+        UP 主当前状态 · <b id="statusText">广播中 · 100万+ · 仅量级 · 1km</b>
+      </div>
+
+      <div class="field-block">
+        <div class="label">粉丝量级 <span class="hint">与手机内 UP 主设置双向同步</span></div>
+        <div class="tier-grid" id="tierGrid">
+          <button class="tier-btn" data-tier="10w" style="--tier-color:var(--tier-10w)"><span class="sw" style="background:var(--tier-10w)"></span><span class="n latin">10万+</span><span class="f">崭露头角</span></button>
+          <button class="tier-btn" data-tier="50w" style="--tier-color:var(--tier-50w)"><span class="sw" style="background:var(--tier-50w)"></span><span class="n latin">50万+</span><span class="f">小有名气</span></button>
+          <button class="tier-btn sel" data-tier="100w" style="--tier-color:var(--tier-100w)"><span class="sw" style="background:var(--tier-100w)"></span><span class="n latin">100万+</span><span class="f">站内头部</span></button>
+          <button class="tier-btn" data-tier="1000w" style="--tier-color:var(--tier-1000w)"><span class="sw" style="background:var(--tier-1000w)"></span><span class="n latin">1000万+</span><span class="f">顶流传说</span></button>
+        </div>
+      </div>
+
+      <div class="field-block">
+        <div class="label">模拟距离 <span class="hint">≤3m 会自动触发当面确认</span></div>
+        <div class="slider-row">
+          <input type="range" id="distSlider" min="1" max="2000" value="980" step="1">
+          <span class="readout mono" id="distReadout">980 m</span>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn primary" id="sendBtn">📡 发送擦肩信号</button>
+        <button class="btn ghost" id="clearBtn">清除</button>
+      </div>
+      <div class="btn-row">
+        <button class="btn ghost small" id="closeBtn">🤝 模拟走近至 3m 内</button>
+        <button class="btn ghost small" id="waveBtn">👋 模拟粉丝打招呼</button>
+      </div>
+      <div class="btn-row">
+        <button class="btn ghost small" id="gotoFan">📱 打开粉丝端擦身页</button>
+        <button class="btn ghost small" id="gotoUp">📱 打开UP主端擦身页</button>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="field-block">
+        <div class="label">事件日志</div>
+        <div class="log-panel" id="logPanel">
+          <div class="log-empty">尚无事件 · 点击上方按钮开始模拟</div>
+        </div>
+      </div>
+
+      <div class="footnote">
+        这是一个用于产品创意演示的原型页面，界面样式参考哔哩哔哩 iOS 客户端设计，但<b style="color:var(--ink)">并非官方功能</b>。演示中的 UP 主昵称、头像、签名寄语与视频内容均为虚构占位数据，仅用于说明「线下擦身通信」这一交互构想。
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+(function(){
+  function cssvar(name){ return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
+  const CLOSE_RANGE = 3;
+
+  const TIERS = {
+    "10w":  {label:"10万+ UP 主",   raw:cssvar('--tier-10w')},
+    "50w":  {label:"50万+ UP 主",   raw:cssvar('--tier-50w')},
+    "100w": {label:"100万+ UP 主",  raw:cssvar('--tier-100w')},
+    "1000w":{label:"1000万+ UP 主", raw:cssvar('--tier-1000w')},
+  };
+  const TIER_ORDER = ["10w","50w","100w","1000w"];
+
+  const SIGNS = {
+    "10w":  ["刚起步的日常区选手，今天也在努力更新～","这个世界需要多一点耐心和武德。"],
+    "50w":  ["专注做内容三年，感谢每一个愿意点进来的人。","今天的活动，我也是特地来的。"],
+    "100w": ["站内头部选手，今天混在人群里逛逛。","很久没有这么近距离感受大家了。"],
+    "1000w":["顶流从不缺席，但今天想低调一点。","这次悄悄来，别把我认出来啊（笑）。"],
+  };
+  const OPEN_NAMES = { "10w":"阿柚的深夜厨房","50w":"机械爪工作室","100w":"老K的观察笔记","1000w":"純白·本尊" };
+  const SIGNATURE_LINES = {
+    "10w":  "感谢这次擦肩，我们下次再见！",
+    "50w":  "谢谢你认出我，今天很开心！",
+    "100w": "很高兴当面遇到你，继续支持我哦！",
+    "1000w":"能被你认出真好，这份签名送你留念。",
+  };
+  const MASK_NAMES = ["用户_8G3K","用户_QF21","用户_L9X4","用户_3TVB"];
+  const FAN_NAMES  = ["柚子汽水","夜行猫头鹰","会发光的鲸","刻晴的小刀"];
+
+  const feedData = [
+    {g:"g1", title:"线下活动没被认出来的 UP 主有多社恐", meta:"128.3万播放", av:"#FB7299"},
+    {g:"g2", title:"用蓝牙做了个「擦身而过」提醒装置", meta:"56.2万播放", av:"#00AEEC"},
+    {g:"g3", title:"数码荒野求生：三天不充电挑战", meta:"31.8万播放", av:"#E0982B"},
+    {g:"g4", title:"和粉丝的第一次线下偶遇，紧张到破音", meta:"89.4万播放", av:"#2FAE66"},
+    {g:"g5", title:"二次元展会蹲点，能认出几个百大UP", meta:"12.1万播放", av:"#B15FD1"},
+    {g:"g6", title:"生活周更 vol.42：搬新工作室啦", meta:"6.7万播放", av:"#8891A0"},
+  ];
+  document.getElementById('feed').innerHTML = feedData.map(v=>`
+    <div class="card">
+      <div class="thumb ${v.g}"><span class="play">▶ ${v.meta}</span><span class="dur">0${Math.ceil(Math.random()*9)}:${(10+Math.floor(Math.random()*49))}</span></div>
+      <div class="title">${v.title}</div>
+      <div class="meta"><span class="avatar-dot" style="background:${v.av}"></span>UP 主 · 弹幕 ${(Math.random()*3+0.2).toFixed(1)}万</div>
+    </div>
+  `).join('');
+
+  let state = {
+    role:'fan', spTab:0, dist:980,
+    fan:{ remindersOn:true, range:1000, followedOnly:false, dndOn:false, precision:'fuzzy', revealWave:false },
+    up:{ broadcasting:true, tier:'100w', visibility:'anon', range:1000, audience:'all', scheduleOn:false, closeRevealOn:true },
+    encounters:[], waves:[],
+  };
+  let activeSignal = null;
+  let closeRevealFired = false;
+  let notifTimer = null;
+
+  // ---------- element refs ----------
+  const screen = document.getElementById('screen');
+  const signalPill = document.getElementById('signalPill');
+  const pillPing = document.getElementById('pillPing');
+  const pillText = document.getElementById('pillText');
+  const pillDist = document.getElementById('pillDist');
+  const notif = document.getElementById('notif');
+  const notifTitle = document.getElementById('notifTitle');
+  const notifMsg = document.getElementById('notifMsg');
+  const sheet = document.getElementById('sheet');
+  const sheetBackdrop = document.getElementById('sheetBackdrop');
+  const sheetAvatar = document.getElementById('sheetAvatar');
+  const sheetTier = document.getElementById('sheetTier');
+  const sheetName = document.getElementById('sheetName');
+  const sheetSign = document.getElementById('sheetSign');
+  const sheetDist = document.getElementById('sheetDist');
+  const revealBackdrop = document.getElementById('revealBackdrop');
+  const revAvatar = document.getElementById('revAvatar');
+  const revBadge = document.getElementById('revBadge');
+  const revName = document.getElementById('revName');
+  const revSigline = document.getElementById('revSigline');
+  const revSigquote = document.getElementById('revSigquote');
+  const revSigmeta = document.getElementById('revSigmeta');
+  const spPage = document.getElementById('spPage');
+  const radarCanvas = document.getElementById('radarCanvas');
+  const rangeLabel = document.getElementById('rangeLabel');
+  const collectionGrid = document.getElementById('collectionGrid');
+  const wavesList = document.getElementById('wavesList');
+  const broadcastCard = document.getElementById('broadcastCard');
+  const bcCore = document.getElementById('bcCore');
+  const bcStatus = document.getElementById('bcStatus');
+  const bcDetail = document.getElementById('bcDetail');
+  const spStats = document.getElementById('spStats');
+  const spTabs = document.getElementById('spTabs');
+  const logPanel = document.getElementById('logPanel');
+  const distSlider = document.getElementById('distSlider');
+  const distReadout = document.getElementById('distReadout');
+  const tierGrid = document.getElementById('tierGrid');
+  const statusDot = document.getElementById('statusDot');
+  const statusText = document.getElementById('statusText');
+
+  // ---------- helpers ----------
+  function fmtDist(d){ return Math.round(d) + ' m'; }
+  function pickSign(tier){ const a=SIGNS[tier]; return a[Math.floor(Math.random()*a.length)]; }
+  function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+  function visLabel(v){ return v==='open' ? '公开昵称' : v==='sign' ? '神秘签名' : '仅显示量级'; }
+  function audienceLabel(a){ return a==='followers' ? '仅关注我的人' : a==='vip' ? '仅大会员' : '所有人'; }
+
+  function visContent(tier, vis){
+    if(vis === 'open') return { name: OPEN_NAMES[tier], sign: '已选择公开昵称，粉丝可直接在动态中找到我', avatarText: OPEN_NAMES[tier][0] };
+    if(vis === 'sign') return { name: '神秘 UP 主', sign: pickSign(tier), avatarText: '?' };
+    return { name: '神秘 UP 主', sign: '仅公开粉丝量级，身份保密', avatarText: '?' };
+  }
+
+  function addLog(msg){
+    const empty = logPanel.querySelector('.log-empty'); if(empty) empty.remove();
+    const t = new Date().toLocaleTimeString('zh-CN',{hour12:false});
+    const row = document.createElement('div');
+    row.className = 'row';
+    row.innerHTML = `<span class="t mono">${t}</span><span class="m">${msg}</span>`;
+    logPanel.prepend(row);
+  }
+
+  // ---------- console: tier + distance ----------
+  function setUpTier(tier){
+    state.up.tier = tier;
+    tierGrid.querySelectorAll('.tier-btn').forEach(b=>b.classList.toggle('sel', b.dataset.tier===tier));
+    document.getElementById('upTierSeg').querySelectorAll('button').forEach(b=>b.classList.toggle('sel', b.dataset.v===tier));
+    renderStatusStrip(); renderBroadcastCard();
+  }
+  tierGrid.addEventListener('click', e=>{ const b=e.target.closest('.tier-btn'); if(!b) return; setUpTier(b.dataset.tier); });
+
+  distSlider.addEventListener('input', ()=>{
+    state.dist = +distSlider.value;
+    distReadout.textContent = fmtDist(state.dist);
+    if(activeSignal){ updateLiveDistance(); checkCloseReveal(); }
+  });
+
+  // ---------- sending signals ----------
+  function updateLiveDistance(){
+    if(!activeSignal) return;
+    activeSignal.dist = state.dist;
+    pillDist.textContent = fmtDist(state.dist);
+    sheetDist.textContent = fmtDist(state.dist);
+    positionBlip(activeSignal);
+  }
+
+  function sendSignal(){
+    if(!state.up.broadcasting){ addLog('UP 主未开启广播，本次未发送信号'); return; }
+    if(state.dist > state.up.range){ addLog(`超出 UP 主设置的可见范围 (${state.up.range}m)，未发出信号`); return; }
+
+    closeRevealFired = false;
+    const tier = state.up.tier, vis = state.up.visibility, info = TIERS[tier];
+    const content = visContent(tier, vis);
+    activeSignal = { tier, dist: state.dist, angle: Math.random()*360, content };
+
+    screen.style.setProperty('--tier-color', info.raw);
+    positionBlip(activeSignal);
+
+    const alreadyClose = state.dist <= CLOSE_RANGE && state.up.closeRevealOn;
+    if(!alreadyClose){
+      const rec = { id:Date.now(), tier, dist:state.dist, time:new Date(), content, signed:false };
+      state.encounters.unshift(rec);
+      renderCollection(); renderStats();
+
+      let suppressed=false, reason='';
+      if(!state.fan.remindersOn){ suppressed=true; reason='粉丝端已关闭擦肩提醒'; }
+      else if(state.dist > state.fan.range){ suppressed=true; reason=`超出粉丝设置的提醒范围 (${state.fan.range}m)`; }
+      else if(state.fan.dndOn){ suppressed=true; reason='粉丝端处于免打扰时段'; }
+
+      if(suppressed){
+        addLog(`静默记录 · ${info.label} · 距离 ${fmtDist(state.dist)} · 原因：${reason}`);
+      } else {
+        pillPing.style.setProperty('--tier-color', info.raw);
+        pillText.textContent = `附近出现 ${info.label}`;
+        pillDist.textContent = fmtDist(state.dist);
+        signalPill.classList.add('show');
+        notifTitle.textContent = `检测到附近的 ${info.label}`;
+        notifMsg.textContent = vis==='open'
+          ? `${content.name} 就在你 ${fmtDist(state.dist)} 范围内，点击查看详情`
+          : `一位 ${info.label} 正在 ${fmtDist(state.dist)} 范围内，点击查看详情`;
+        notif.classList.add('show');
+        clearTimeout(notifTimer);
+        notifTimer = setTimeout(()=>notif.classList.remove('show'), 4200);
+        addLog(`推送提醒 · ${info.label} · 距离 ${fmtDist(state.dist)} · ${visLabel(vis)}`);
+      }
+    }
+    checkCloseReveal();
+  }
+
+  function checkCloseReveal(){
+    if(!activeSignal || closeRevealFired) return;
+    if(!state.up.broadcasting || !state.up.closeRevealOn) return;
+    if(activeSignal.dist <= CLOSE_RANGE){
+      closeRevealFired = true;
+      triggerCloseEncounter(activeSignal.tier);
+    }
+  }
+
+  function triggerCloseEncounter(tier){
+    const info = TIERS[tier];
+    const name = OPEN_NAMES[tier];
+    const quote = SIGNATURE_LINES[tier];
+    const serial = '2026-0912-' + String(Math.floor(Math.random()*9000+1000));
+    if(activeSignal) activeSignal.content = { name, sign:quote, avatarText:name[0] };
+
+    notif.classList.remove('show');
+    pillPing.style.setProperty('--tier-color', info.raw);
+    pillText.textContent = `偶遇成功 · ${name}`;
+    pillDist.textContent = '≤3m';
+    signalPill.classList.add('show');
+
+    revealBackdrop.style.setProperty('--tier-color', info.raw);
+    revAvatar.style.setProperty('--tier-color', info.raw);
+    revAvatar.textContent = name[0];
+    revBadge.textContent = info.label;
+    revName.textContent = name;
+    revSigline.textContent = name;
+    revSigquote.textContent = quote;
+    revSigmeta.textContent = `NO. ${serial} · 哔哩偶遇认证签名`;
+    revealBackdrop.classList.add('show');
+
+    const rec = { id:Date.now(), tier, dist:state.dist, time:new Date(),
+      content:{ name, sign:'当面确认偶遇', avatarText:name[0] }, signed:true };
+    state.encounters.unshift(rec);
+    renderCollection(); renderStats();
+    addLog(`🎉 当面确认偶遇 · ${name}（${info.label}）· 获得专属电子签名`);
+  }
+  document.getElementById('revOk').addEventListener('click', ()=>revealBackdrop.classList.remove('show'));
+
+  function positionBlip(sig){
+    let blip = radarCanvas.querySelector('.blip[data-live="1"]');
+    if(!blip){ blip = document.createElement('div'); blip.className='blip'; blip.dataset.live='1'; radarCanvas.appendChild(blip); }
+    const info = TIERS[sig.tier];
+    blip.style.background = info.raw;
+    blip.classList.toggle('fuzzy', state.fan.precision==='fuzzy');
+    const ratio = Math.min(sig.dist/state.fan.range, 1);
+    const r = ratio * 46;
+    const rad = sig.angle * Math.PI/180;
+    blip.style.left = (50 + r*Math.cos(rad)) + '%';
+    blip.style.top = (50 + r*Math.sin(rad)) + '%';
+  }
+
+  function clearSignal(){
+    activeSignal = null; closeRevealFired = false;
+    signalPill.classList.remove('show');
+    notif.classList.remove('show');
+    revealBackdrop.classList.remove('show');
+    closeSheet();
+    const blip = radarCanvas.querySelector('.blip[data-live="1"]');
+    if(blip) blip.remove();
+    addLog('清除当前信号');
+  }
+
+  function simulateWave(){
+    const revealed = state.fan.revealWave;
+    const name = revealed ? pick(FAN_NAMES) : pick(MASK_NAMES);
+    state.waves.unshift({ id:Date.now(), name, revealed, time:new Date() });
+    renderWaves(); renderStats();
+    addLog(`收到挥手 · ${revealed ? name : '神秘粉丝'} 向你打招呼`);
+  }
+
+  document.getElementById('sendBtn').addEventListener('click', sendSignal);
+  document.getElementById('clearBtn').addEventListener('click', clearSignal);
+  document.getElementById('waveBtn').addEventListener('click', simulateWave);
+  document.getElementById('closeBtn').addEventListener('click', ()=>{
+    distSlider.value = 2; state.dist = 2; distReadout.textContent = '2 m';
+    if(activeSignal){ updateLiveDistance(); checkCloseReveal(); } else { sendSignal(); }
+  });
+
+  // ---------- quick-glance sheet (far range) ----------
+  function openSheet(){
+    if(!activeSignal) return;
+    const info = TIERS[activeSignal.tier];
+    sheet.style.setProperty('--tier-color', info.raw);
+    sheetAvatar.style.setProperty('--tier-color', info.raw);
+    sheetAvatar.textContent = activeSignal.content.avatarText;
+    sheetTier.querySelector('span:last-child').textContent = info.label;
+    sheetTier.querySelector('.sw').style.background = info.raw;
+    sheetName.textContent = activeSignal.content.name;
+    sheetSign.textContent = activeSignal.content.sign;
+    sheetDist.textContent = fmtDist(activeSignal.dist);
+    sheet.classList.add('show'); sheetBackdrop.classList.add('show');
+  }
+  function closeSheet(){ sheet.classList.remove('show'); sheetBackdrop.classList.remove('show'); }
+  notif.addEventListener('click', ()=>{ notif.classList.remove('show'); openSheet(); });
+  signalPill.addEventListener('click', ()=>{ if(revealBackdrop.classList.contains('show')) return; openSheet(); });
+  sheetBackdrop.addEventListener('click', closeSheet);
+  document.getElementById('sheetClose').addEventListener('click', closeSheet);
+  document.getElementById('sheetWave').addEventListener('click', ()=>{ simulateWave(); closeSheet(); });
+
+  // ---------- 擦身页 open/close + role/tab ----------
+  const TAB_LABELS = { fan:['雷达','图鉴','隐私设置'], up:['广播中','收到的招呼','隐私设置'] };
+  function openSp(role){
+    if(role) switchRole(role);
+    spPage.classList.add('show');
+  }
+  document.getElementById('spBanner').addEventListener('click', ()=>openSp());
+  document.getElementById('spBack').addEventListener('click', ()=>spPage.classList.remove('show'));
+  document.getElementById('spGear').addEventListener('click', ()=>{ spPage.classList.add('show'); switchTab(2); });
+  document.getElementById('bcLink').addEventListener('click', ()=>switchTab(2));
+  document.getElementById('gotoFan').addEventListener('click', ()=>openSp('fan'));
+  document.getElementById('gotoUp').addEventListener('click', ()=>openSp('up'));
+
+  document.getElementById('spRoleSeg').addEventListener('click', e=>{
+    const b=e.target.closest('button'); if(!b) return; switchRole(b.dataset.role);
+  });
+  spTabs.addEventListener('click', e=>{ const b=e.target.closest('button'); if(!b) return; switchTab(+b.dataset.t); });
+
+  function switchRole(role){
+    state.role = role;
+    document.getElementById('spRoleSeg').querySelectorAll('button').forEach(b=>b.classList.toggle('sel', b.dataset.role===role));
+    spTabs.querySelectorAll('button').forEach((b,i)=>{ b.textContent = TAB_LABELS[role][i]; });
+    switchTab(0);
+  }
+  function switchTab(i){
+    state.spTab = i;
+    spTabs.querySelectorAll('button').forEach((b,idx)=>b.classList.toggle('sel', idx===i));
+    const map = state.role==='fan'
+      ? ['panelFanRadar','panelFanCollection','panelFanPrivacy']
+      : ['panelUpBroadcast','panelUpWaves','panelUpPrivacy'];
+    ['panelFanRadar','panelFanCollection','panelFanPrivacy','panelUpBroadcast','panelUpWaves','panelUpPrivacy'].forEach(id=>{
+      document.getElementById(id).hidden = (id !== map[i]);
+    });
+    renderStats();
+  }
+
+  // ---------- render: stats ----------
+  function renderStats(){
+    if(state.role==='fan'){
+      const uniqTiers = new Set(state.encounters.map(e=>e.tier)).size;
+      const signedCount = state.encounters.filter(e=>e.signed).length;
+      spStats.innerHTML = `
+        <div class="tile"><div class="num mono">${state.encounters.length}</div><div class="lab">本次擦肩</div></div>
+        <div class="tile"><div class="num mono">${uniqTiers}</div><div class="lab">不同量级</div></div>
+        <div class="tile"><div class="num mono">${signedCount}</div><div class="lab">已获签名</div></div>`;
+    } else {
+      spStats.innerHTML = `
+        <div class="tile"><div class="num mono">${state.up.broadcasting?'ON':'OFF'}</div><div class="lab">广播状态</div></div>
+        <div class="tile"><div class="num mono">${state.waves.length}</div><div class="lab">收到挥手</div></div>
+        <div class="tile"><div class="num mono">${state.up.range}m</div><div class="lab">覆盖范围</div></div>`;
+    }
+  }
+
+  // ---------- render: collection ----------
+  function renderCollection(){
+    if(!state.encounters.length){
+      collectionGrid.innerHTML = '<div class="empty-hint" style="grid-column:1/-1;">暂无擦肩记录 · 在右侧控制台发送一次信号试试</div>';
+      return;
+    }
+    collectionGrid.innerHTML = state.encounters.map(e=>{
+      const info = TIERS[e.tier];
+      return `<div class="coll-card" style="--c:${info.raw}">
+        ${e.signed ? '<div class="signed-tag">签</div>' : ''}
+        <div class="av">${e.content.avatarText}</div>
+        <div class="nm">${e.content.name}</div>
+        <div class="mt">${fmtDist(e.dist)}</div>
+      </div>`;
+    }).join('');
+  }
+
+  // ---------- render: waves ----------
+  function renderWaves(){
+    if(!state.waves.length){ wavesList.innerHTML = '<div class="empty-hint">暂无粉丝打招呼 · 在右侧控制台模拟一次</div>'; return; }
+    wavesList.innerHTML = state.waves.map(w=>{
+      const t = w.time.toLocaleTimeString('zh-CN',{hour12:false});
+      return `<div class="list-entry"><span class="sw" style="background:var(--accent-2)"></span>
+        <span class="txt"><b>${w.revealed ? w.name : '神秘粉丝'}</b> 向你挥手打招呼</span>
+        <span class="time mono">${t}</span></div>`;
+    }).join('');
+  }
+
+  // ---------- render: broadcast card + status strip ----------
+  function renderBroadcastCard(){
+    const info = TIERS[state.up.tier];
+    broadcastCard.style.setProperty('--tier-color', info.raw);
+    broadcastCard.classList.toggle('off', !state.up.broadcasting);
+    bcStatus.textContent = state.up.broadcasting ? '正在广播' : '广播已关闭';
+    bcDetail.textContent = `${info.label} · ${visLabel(state.up.visibility)} · 覆盖 ${state.up.range}m · ${audienceLabel(state.up.audience)}可见`;
+  }
+  function renderStatusStrip(){
+    const info = TIERS[state.up.tier];
+    statusDot.classList.toggle('off', !state.up.broadcasting);
+    statusText.textContent = state.up.broadcasting
+      ? `广播中 · ${info.label.replace(' UP 主','')} · ${visLabel(state.up.visibility)} · ${state.up.range}m`
+      : '已关闭广播';
+  }
+  function renderRangeLabel(){ rangeLabel.textContent = state.fan.range + 'm'; }
+
+  // ---------- fan privacy bindings ----------
+  document.getElementById('fanReminders').addEventListener('change', e=>{ state.fan.remindersOn = e.target.checked; });
+  document.getElementById('fanRangeSeg').addEventListener('click', e=>{
+    const b=e.target.closest('button'); if(!b) return;
+    state.fan.range = +b.dataset.v;
+    document.getElementById('fanRangeSeg').querySelectorAll('button').forEach(x=>x.classList.toggle('sel', x===b));
+    renderRangeLabel();
+    if(activeSignal) positionBlip(activeSignal);
+  });
+  document.getElementById('fanDnd').addEventListener('change', e=>{
+    state.fan.dndOn = e.target.checked;
+    document.getElementById('fanDndTimes').hidden = !e.target.checked;
+  });
+  document.getElementById('fanFollowed').addEventListener('change', e=>{ state.fan.followedOnly = e.target.checked; });
+  document.getElementById('fanPrecisionSeg').addEventListener('click', e=>{
+    const b=e.target.closest('button'); if(!b) return;
+    state.fan.precision = b.dataset.v;
+    document.getElementById('fanPrecisionSeg').querySelectorAll('button').forEach(x=>x.classList.toggle('sel', x===b));
+    if(activeSignal) positionBlip(activeSignal);
+  });
+  document.getElementById('fanRevealWave').addEventListener('change', e=>{ state.fan.revealWave = e.target.checked; });
+
+  // ---------- up privacy bindings ----------
+  document.getElementById('upBroadcasting').addEventListener('change', e=>{
+    state.up.broadcasting = e.target.checked; renderBroadcastCard(); renderStatusStrip(); renderStats();
+  });
+  document.getElementById('upTierSeg').addEventListener('click', e=>{
+    const b=e.target.closest('button'); if(!b) return; setUpTier(b.dataset.v);
+  });
+  document.getElementById('upVisSeg').addEventListener('click', e=>{
+    const b=e.target.closest('button'); if(!b) return;
+    state.up.visibility = b.dataset.v;
+    document.getElementById('upVisSeg').querySelectorAll('button').forEach(x=>x.classList.toggle('sel', x===b));
+    renderBroadcastCard(); renderStatusStrip();
+  });
+  document.getElementById('upRangeSeg').addEventListener('click', e=>{
+    const b=e.target.closest('button'); if(!b) return;
+    state.up.range = +b.dataset.v;
+    document.getElementById('upRangeSeg').querySelectorAll('button').forEach(x=>x.classList.toggle('sel', x===b));
+    renderBroadcastCard(); renderStatusStrip(); renderStats();
+  });
+  document.getElementById('upAudienceSeg').addEventListener('click', e=>{
+    const b=e.target.closest('button'); if(!b) return;
+    state.up.audience = b.dataset.v;
+    document.getElementById('upAudienceSeg').querySelectorAll('button').forEach(x=>x.classList.toggle('sel', x===b));
+    renderBroadcastCard();
+  });
+  document.getElementById('upSchedule').addEventListener('change', e=>{
+    state.up.scheduleOn = e.target.checked;
+    document.getElementById('upScheduleTimes').hidden = !e.target.checked;
+  });
+  document.getElementById('upCloseReveal').addEventListener('change', e=>{ state.up.closeRevealOn = e.target.checked; });
+
+  // ---------- init ----------
+  screen.style.setProperty('--tier-color', TIERS[state.up.tier].raw);
+  renderRangeLabel();
+  renderCollection();
+  renderWaves();
+  renderBroadcastCard();
+  renderStatusStrip();
+  switchRole('fan');
+})();
+</script>
